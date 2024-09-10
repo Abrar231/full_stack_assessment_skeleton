@@ -129,7 +129,16 @@ docker-compose -f docker-compose.initial.yml up --build -d
 
 ### solution
 
-> explain briefly your solution for this problem here
+Given table user_home has data related to user and home. So to normalize the data, 2 tables user and home is created.
+Table user has id, username and email columns. username is unique.
+Table home has id, street_address, state, zip, sqft, beds, baths and list_price columns. street_address is unique.
+As data in user_home has many to many relationship between user and home, table user_home_join is created to stored M-N relationship.
+Table user_home_join has id, user_id and home_id columns. user_id references id of user and home_id references id of home.
+
+To populate user and home, INSERT INTO query is used. columns releted to respective tables are added to user and home from user_home.
+To poulate user_home_join, user_id and home_id were needed. But user_home has username and street_address columns. So left join is used to replace username with corresponding user_id and street_address with corresponding home_id. 
+
+DO and UNDO, 2 sets of queries are given. UNDO set is for deleting the tables created in DO set.
 
 ## 2. React SPA
 
@@ -220,7 +229,15 @@ docker-compose -f docker-compose.initial.yml up --build -d
 
 ### solution
 
-> explain briefly your solution for this problem here
+Requirement is that different users can be selected and homes related to selected user should be displayed. For this, created 2 components. One for select element and another Card displaying details of each home. And a Modal Component to update users related to a home.
+App is created using Vite and Tailwind CSS is used for styling.
+Redux is used for global state management and useState hook for local state of components. selectedUser state is managed globally.
+For fetching data, RTK Query is used. List of users, list of homes related to a user, list of users related  to a home and updating users related to a home are done using RTK Query.
+This ensures fetched data is cached for improved performance.
+Spinners are rendered whenever API request is made and the same has to be conveyed to user.
+To run frontend, go to frontend directory and use the command "npm run dev"
+VITE_BASEURL Env variables is used to send API calls to server.
+This is completed in DEVELOPMENT mode
 
 ## 3. Backend API development on Node
 
@@ -281,7 +298,12 @@ docker-compose -f docker-compose.initial.yml up --build -d
 
 ### solution
 
-> explain briefly your solution for this problem here
+Backend is built on express.
+Sequelize ORM is used for querying the DB.
+All required APIs are built.
+.env contains all DB related environment variables and ALLOWED_ORIGIN.
+Use "npm start" to start the server. It runs on 3000 port. CORS is updated to allow request from ALLOWED_ORIGIN
+This is completed in DEVELOPMENT mode
 
 ## Submission Guidelines
 
